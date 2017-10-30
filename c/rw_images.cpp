@@ -1,16 +1,20 @@
 #include <stdio.h>
 
-/*
-int read_rgb (char *file, unsigned char *buffer, int rows, int columns);
-int write_rgb (char *file, unsigned char *buffer, int rows, int columns);
-*/
+
+
+
+
+
+
+void read_rgb (FILE *file, unsigned char buffer[][3], int rows, int columns);
 
 void printBuffer(unsigned char buffer[][3], int size);
+
+// int write_rgb (char *file, unsigned char *buffer, int rows, int columns);
 
 int main()
 {
 	
-
 	// IMAGE 
  	FILE *file; 
  	file = fopen("../img/gopher1_2x2.rgb", "r+b"); 
@@ -19,15 +23,24 @@ int main()
  	
 
  	
-    //CHANNELS & BUFFER 
-	unsigned char byte_R; 
-    unsigned char byte_G;
-    unsigned char byte_B;
+    // BUFFER 
     unsigned char buffer[width*high][3]; 
      
-     
-    	for ( int i = 0 ; i < width ; i++ ) {
-     		for ( int j = 0 ; j < high ; j++ ) {
+    
+    //READ RGB
+    read_rgb(file,buffer,high,width);
+    
+    
+return 0; 
+}
+
+void read_rgb (FILE *file, unsigned char buffer[][3], int rows, int columns){
+		unsigned char byte_R; 
+    	unsigned char byte_G;
+    	unsigned char byte_B;
+    		
+		for ( int i = 0 ; i < columns ; i++ ) {
+     		for ( int j = 0 ; j < rows ; j++ ) {
    				if(!feof(file)){
    				
          			byte_R=fgetc(file); 
@@ -42,14 +55,11 @@ int main()
 			}	
 		}
 		
-		printBuffer(buffer,(width*high));
+		printBuffer(buffer,(columns*rows));
 		
 		fclose(file); 
-	  
-     
-return 0; 
+			
 }
-
 
 void printBuffer(unsigned char buffer[][3], int size){
 		printf("\n\nBUFFER RGB\n\n 0 = R\t1 = G\t2 = B\n\n\n");
@@ -65,16 +75,13 @@ void printBuffer(unsigned char buffer[][3], int size){
 }
 
 
+
+
+
 /*
-int leer_rgb (char *archivo, unsigned char *buffer, int filas, int columnas){
-		
-}
-
-
-int escribir_rgb (char *archivo, unsigned char *buffer, int filas, int columnas){
+int write_rgb (char *file, unsigned char *buffer, int rows, int columns){
 	
 }
-
 */
 
 
