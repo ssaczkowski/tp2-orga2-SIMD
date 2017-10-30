@@ -1,1 +1,1 @@
-Practice about assembly SIMD (Single Instruction, Multiple Data) and C.
+Rodrigo Depetris & Sabrina Saczkowski
