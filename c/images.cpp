@@ -4,6 +4,7 @@
 void read_rgb (char *file, unsigned char *buffer, int rows, int columns);
 void printBuffer(unsigned char *buffer, int size);
 int write_rgb (char *file, unsigned char *buffer, int rows, int columns);
+void printFile(char *file, int size);
 
 //void split_rgb (FILE *file, unsigned char buffer[][3], int rows, int columns);
 //void printMatrixBuffer(unsigned char buffer[][3], int size);
@@ -23,26 +24,63 @@ int main()
     // BUFFER 
     unsigned char buffer[imageSize]; 
     
-	// POINTER 
+	// READ RGB 
 	
-	char *pointerFile;
-	pointerFile = (char*) malloc(imageSize*3);
+	char *pointerFileRead;
+	pointerFileRead = (char*) malloc(imageSize*3);
 	
     if(!feof(file)){		
-        fread(pointerFile,(imageSize*3), (imageSize), file ); 
+        fread(pointerFileRead,(imageSize*3), (imageSize), file ); 
     }
     
-    //READ RGB
-    read_rgb(pointerFile,buffer,high,width);
+    read_rgb(pointerFileRead,buffer,high,width);
     
 	fclose(file); 
 	
 	printBuffer(buffer,(imageSize));
+	
+	// WRITE RGB
+	
+	buffer[0] = 0;
+	buffer[1] = 0;
+	buffer[2] = 0;
+	buffer[3] = 0;
+	 
+	
+	char *pointerFileWrite;
+	pointerFileWrite = (char*) malloc(imageSize*3);
+	
+    if(!feof(file)){		
+        fread(pointerFileWrite,(imageSize*3), (imageSize), file ); 
+    }
+    
+    write_rgb(pointerFileWrite,buffer,high,width);
+    
+	fclose(file); 
+	
+	printFile(pointerFileWrite,(imageSize));
+	
     
 return 0; 
 }
 
-
+int write_rgb (char *file, unsigned char *buffer, int rows, int columns){
+	
+	 /*	int indexBuffer= 0; 
+    	
+		for ( int i = 0 ; i < columns ; i++ ) {
+     		for ( int j = 0 ; j < rows ; j++ ) {
+     		
+     				
+         			file[indexBuffer]= buffer[indexBuffer];
+         			indexBuffer++;
+         		
+			}	
+		}*/
+		
+		fwrite( file, (rows*columns*3), (rows*columns) , buffer ); 
+	
+}
 
 void read_rgb (char *file, unsigned char *buffer, int rows, int columns){
 	
@@ -63,7 +101,7 @@ void read_rgb (char *file, unsigned char *buffer, int rows, int columns){
 
 void printBuffer(unsigned char *buffer, int size){
 	
-		printf("Buffer of %d elements:\n\n\n", size);
+		printf("\nBuffer of %d elements:\n\n\n", size);
 		
 		for (int i=0 ; i < size; i++){
 			
@@ -72,6 +110,22 @@ void printBuffer(unsigned char *buffer, int size){
 			printf("\n");	
 		}
 }
+
+
+void printFile(char *file, int size){
+	
+		printf("\nFile of %d elements:\n\n\n", size);
+		
+		for (int i=0 ; i < size; i++){
+			
+			printf("%d \t\t\t",file[i]);
+		
+			printf("\n");	
+		}
+}
+
+
+
 /*
 void printMatrixBuffer(unsigned char buffer[][3], int size){
 		printf("\n\nBUFFER RGB\n\n 0 = R\t1 = G\t2 = B\n\n\n");
@@ -113,11 +167,6 @@ void split_rgb (FILE *file, unsigned char buffer[][3], int rows, int columns){
 		fclose(file); 
 			
 } 
-*/
-/*
-int write_rgb (char *file, unsigned char *buffer, int rows, int columns){
-	
-}
 */
 
 
