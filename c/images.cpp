@@ -4,7 +4,7 @@
 void read_rgb (char *file, unsigned char *buffer, int rows, int columns);
 void printBuffer(unsigned char *buffer, int size);
 void write_rgb (char *file, unsigned char *buffer, int rows, int columns);
-void printFile(char *file, int size);
+void printFile(unsigned char *file, int size);
 
 //void split_rgb (FILE *file, unsigned char buffer[][3], int rows, int columns);
 //void printMatrixBuffer(unsigned char buffer[][3], int size);
@@ -41,7 +41,7 @@ int main()
 	
 	// IMAGE 
  	FILE *file2; 
- 	file2 = fopen("../img/gopher1_2x2.rgb", "w"); 
+ 	file2 = fopen("../img/gopher1_2x2.rgb", "r+w"); 
  	int width2 = 2;
  	int high2 = 2;
  	int imageSize2 = width2*high2;
@@ -119,7 +119,7 @@ void printBuffer(unsigned char *buffer, int size){
 }
 
 
-void printFile( char *file, int size){
+void printFile( unsigned char *file, int size){
 	
 		printf("\nFile of %d elements:\n\n\n", size);
 		
