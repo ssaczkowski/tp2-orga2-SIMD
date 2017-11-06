@@ -3,7 +3,7 @@
 
 void read_rgb (char *file, unsigned char *buffer, int rows, int columns);
 void printBuffer(unsigned char *buffer, int size);
-int write_rgb (char *file, unsigned char *buffer, int rows, int columns);
+void write_rgb (char *file, unsigned char *buffer, int rows, int columns);
 void printFile(char *file, int size);
 
 //void split_rgb (FILE *file, unsigned char buffer[][3], int rows, int columns);
@@ -20,7 +20,6 @@ int main()
  	int high = 2;
  	int imageSize = width*high;
 
- 	
     // BUFFER 
     unsigned char buffer[imageSize]; 
     
@@ -39,34 +38,45 @@ int main()
 	
 	printBuffer(buffer,(imageSize));
 	
+	
+	// IMAGE 
+ 	FILE *file2; 
+ 	file2 = fopen("../img/gopher1_2x2.rgb", "w"); 
+ 	int width2 = 2;
+ 	int high2 = 2;
+ 	int imageSize2 = width2*high2;
+ 	
+ 	//BUFFER
+ 	unsigned char buffer2[imageSize2]; 
+ 	
+	buffer2[0] = 0;
+	buffer2[1] = 0;
+	buffer2[2] = 0;
+	buffer2[3] = 0;
+	
 	// WRITE RGB
-	
-	buffer[0] = 0;
-	buffer[1] = 0;
-	buffer[2] = 0;
-	buffer[3] = 0;
-	 
-	
 	char *pointerFileWrite;
-	pointerFileWrite = (char*) malloc(imageSize*3);
+	pointerFileWrite = (char*) malloc(imageSize2*3);
 	
-    if(!feof(file)){		
-        fread(pointerFileWrite,(imageSize*3), (imageSize), file ); 
+    if(!feof(file2)){		
+        fread(pointerFileWrite,(imageSize2*3), (imageSize2), file2 ); 
     }
+    read_rgb(pointerFileWrite,buffer2,high2,width2);
     
-    write_rgb(pointerFileWrite,buffer,high,width);
+    write_rgb(pointerFileWrite,buffer2,high2,width2);
     
+	//fwrite( file2, (rows*columns*3), (rows*columns) , file2 ); 
 	fclose(file); 
 	
-	printFile(pointerFileWrite,(imageSize));
+	printFile(pointerFileWrite,(imageSize2));
 	
     
 return 0; 
 }
 
-int write_rgb (char *file, unsigned char *buffer, int rows, int columns){
+void write_rgb ( char *file, unsigned char *buffer, int rows, int columns){
 	
-	 /*	int indexBuffer= 0; 
+	 	int indexBuffer= 0; 
     	
 		for ( int i = 0 ; i < columns ; i++ ) {
      		for ( int j = 0 ; j < rows ; j++ ) {
@@ -76,10 +86,8 @@ int write_rgb (char *file, unsigned char *buffer, int rows, int columns){
          			indexBuffer++;
          		
 			}	
-		}*/
+		}
 		
-		fwrite( file, (rows*columns*3), (rows*columns) , buffer ); 
-	
 }
 
 void read_rgb (char *file, unsigned char *buffer, int rows, int columns){
@@ -89,7 +97,6 @@ void read_rgb (char *file, unsigned char *buffer, int rows, int columns){
 		for ( int i = 0 ; i < columns ; i++ ) {
      		for ( int j = 0 ; j < rows ; j++ ) {
      		
-     				
          			buffer[indexBuffer]= file[indexBuffer];
          			indexBuffer++;
          		
@@ -112,7 +119,7 @@ void printBuffer(unsigned char *buffer, int size){
 }
 
 
-void printFile(char *file, int size){
+void printFile( char *file, int size){
 	
 		printf("\nFile of %d elements:\n\n\n", size);
 		
