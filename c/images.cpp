@@ -26,28 +26,31 @@ int main()
 	
 	//IMAGE 1
 	file = fopen("../img/gopher1_2x2.rgb", "r+b"); 
-if(!feof(file)){
+	if(!feof(file)){
 	printf ("PRIMER IMAGEN\n");		
     fread(pointerFileRead,(imageSize*3), (imageSize), file );     
     read_rgb(pointerFileRead,buffer,high,width);
     fclose(file); 
 	printBuffer(buffer,(imageSize));
-}
+	}
 	free(pointerFileRead);
 
 	//IMAGE 2
 	//pointerFileRead = (unsigned char*) malloc(imageSize*3);
 	pointerFileRead = (unsigned char*) malloc(imageSize*3);
-	file = fopen("../img/gopher2_2x2.rgb", "r+b"); 
-if(!feof(file)){		
+	file = fopen("../img/gopher1_2x2.rgb", "r+b"); 
+	
+	if(!feof(file)){		
 	printf ("\n\nSEGUNDA IMAGEN\n");
     fread(pointerFileRead,(imageSize*3), (imageSize), file );     
     read_rgb(pointerFileRead,buffer2,high,width);
     fclose(file); 
 	printBuffer(buffer2,(imageSize));
-}
-free(pointerFileRead);
-return 0;
+	}
+	free(pointerFileRead);
+
+
+	return 0;
 }
 
 void write_rgb ( char *file, unsigned char *buffer, int rows, int columns){
@@ -73,9 +76,8 @@ void read_rgb (unsigned char *file, unsigned char *buffer, int rows, int columns
      		for ( int j = 0 ; j < rows ; j++ ) {
      		
          			buffer[indexBuffer]= file[indexBuffer];
-         	//		indexBuffer++;
          			printf ("file: %d : Buffer: %d\n",file[indexBuffer],buffer[indexBuffer]); 
-					 indexBuffer++;       		
+					indexBuffer++;       		
 			}	
 		}
 		system("pause");
