@@ -3,7 +3,7 @@
 
 void read_rgb (unsigned char *file, unsigned char *buffer, int rows, int columns);
 void printBuffer(unsigned char *buffer, int size);
-void write_rgb (unsigned char *file, unsigned char *buffer, int rows, int columns);
+void write_rgb (unsigned char *archivo, unsigned char *buffer, int rows, int columns);
 void printFile(unsigned char *file, int size);
 
 //void split_rgb (FILE *file, unsigned char buffer[][3], int rows, int columns);
@@ -14,12 +14,14 @@ int main()
 {	
 	// IMAGE 
  	FILE *file; 
+ 	FILE *pFile;
  	int width = 2;
  	int high = 2;
  	int imageSize = width*high;
     // BUFFER 
     unsigned char buffer[imageSize]; 
     unsigned char buffer2[imageSize]; 
+    unsigned char *archivo;
     // READ RGB 
 	unsigned char *pointerFileRead;
 	pointerFileRead = (unsigned char*) malloc(imageSize*3);
@@ -28,7 +30,7 @@ int main()
 	file = fopen("../img/gopher1_2x2.rgb", "r+b"); 
 	if(!feof(file)){
 	printf ("PRIMER IMAGEN\n");		
-    fread(pointerFileRead,(imageSize*3), (imageSize), file );     
+    fread(pointerFileRead,(imageSize*3), (imageSize), file);     
     read_rgb(pointerFileRead,buffer,high,width);
     fclose(file); 
 	printBuffer(buffer,(imageSize));
@@ -47,8 +49,15 @@ int main()
     fclose(file); 
 	printBuffer(buffer2,(imageSize));
 	}
-	free(pointerFileRead);
-
+		free(pointerFileRead);
+	//WRITE RGB
+	  pFile = fopen ("../img/resultado.rgb", "wb");
+	  	if(!feof(file)){		
+	  	archivo = (unsigned char*) malloc(imageSize*3); //cambiar el buffer2 por el buffer del resultado
+		write_rgb(archivo,buffer2,high,width);
+	    fwrite (archivo , (imageSize*3), (imageSize), pFile);
+	    fclose (pFile);
+}
 
 	return 0;
 }
@@ -107,6 +116,17 @@ void printFile(  char *file, int size){
 			printf("%d \t\t\t",file[i]);
 		
 			printf("\n");	
+		}
+}
+
+void write_rgb (unsigned char *file, unsigned char *buffer, int rows, int columns){
+		int indexBuffer= 0; 
+		for ( int i = 0 ; i < columns ; i++ ) {
+     		for ( int j = 0 ; j < rows ; j++ ) {
+     		
+         			file[indexBuffer]= buffer[indexBuffer];
+         			indexBuffer++;       		
+			}	
 		}
 }
 
