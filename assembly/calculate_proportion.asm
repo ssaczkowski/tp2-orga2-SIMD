@@ -26,7 +26,7 @@ mov EBP, ESP
 mov EDX, [EBP+8] ;p
 mov EBX, [EBP+12];v1
 mov EAX, [EBP+16];v2
-mov ESI, [EBP+24];ptrResult
+mov ESI, [EBP+24];ptrProportion
 
 ; p * v1 
 fld dword [EDX]
