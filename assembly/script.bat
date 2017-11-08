@@ -1,3 +1,3 @@
-nasm -f win32 -o _area_circulo.o _area_circulo.asm
-mingw32-gcc -Wall -o _main _area_circulo.o
+nasm -f win32 -o _calculate_proportion.o _calculate_proportion.asm
+mingw32-gcc -Wall -o _main _calculate_proportion.o
 _main.exe
