@@ -1,3 +1,4 @@
-nasm -f win32 -o _calculate_proportion.o _calculate_proportion.asm
-mingw32-gcc -Wall -o _main _calculate_proportion.o
-_main.exe
+nasm -f win32 -o calculate_proportion.o calculate_proportion.asm
+nasm -f win32 -o main.o main.asm
+mingw32-gcc -Wall -o main main.o calculate_proportion.o
+main.exe
