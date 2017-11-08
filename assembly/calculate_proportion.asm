@@ -26,6 +26,7 @@ mov EBP, ESP
 mov EDX, [EBP+8] ;p
 mov EBX, [EBP+12];v1
 mov EAX, [EBP+16];v2
+mov ESI, [EBP+24];ptrResult
 
 ; p * v1 
 fld dword [EDX]
@@ -45,9 +46,12 @@ fadd ; 2.0
 fst qword [r2]
 push dword [r2+4]
 push dword [r2]
+mov EDX,[ESI]
+
+fst   qword   [EDX] 
+
 push fmt
 call _printf
-add ESP, 12
-
+add ESP, 16
 
 ret

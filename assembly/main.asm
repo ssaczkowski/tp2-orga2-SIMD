@@ -3,6 +3,7 @@ msg_welcome:    db     `\nInterpolating...\n`, 10, 0
 p dd 2.0
 v1 dd 2.0
 v2 dd 2.0
+ptrResult dd 0
 
 section .text
 extern _printf
@@ -22,7 +23,9 @@ mov EBP, ESP
 push p
 push v1
 push v2
+push ptrResult
 call _calculate_proportion
-add ESP, 12
+
+add ESP, 20
 
 ret
