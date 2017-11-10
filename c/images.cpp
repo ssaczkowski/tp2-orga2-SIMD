@@ -32,8 +32,9 @@ int main()
 	printf ("PRIMER IMAGEN\n");		
     fread(pointerFileRead,(imageSize*3), (imageSize), file);     
     read_rgb(pointerFileRead,buffer,high,width);
+    printBuffer(pointerFileRead,(imageSize));
+
     fclose(file); 
-	printBuffer(buffer,(imageSize));
 	}
 	free(pointerFileRead);
 
@@ -46,6 +47,7 @@ int main()
 	printf ("\n\nSEGUNDA IMAGEN\n");
     fread(pointerFileRead,(imageSize*3), (imageSize), file );     
     read_rgb(pointerFileRead,buffer2,high,width);
+
     fclose(file); 
 	printBuffer(buffer2,(imageSize));
 	}
@@ -102,7 +104,8 @@ void printBuffer(unsigned char *buffer, int size){
 			
 			printf("%d \t\t\t",buffer[i]);
 		
-			printf("\n");	
+			printf("\n");
+				
 		}
 }
 
