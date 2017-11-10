@@ -27,9 +27,10 @@ push ptrIMG2
 push p
 push CANTIDAD
 push ptrIMGR
-
-
 call _interpolate
 add ESP, 16
+
+mov     ESP, EBP
+pop     EBP
 
 ret
