@@ -22,11 +22,13 @@ add esp,4
 push EBP
 mov EBP, ESP
 
+push ptrIMG1
+push ptrIMG2
 push p
 push CANTIDAD
 push ptrIMGR
-;push ptrIMG2
-;push ptrIMG1
+
+
 call _interpolate
 add ESP, 16
 

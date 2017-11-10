@@ -6,6 +6,7 @@ msg_v1:    db     `\n  v1 = %f \n`, 10, 0
 msg_v2:    db     `\n  v2 = %f \n`, 10, 0
 msg_ptrIMGR: db     `\n  ptrIMGR = %p \n`, 10, 0
 msg_ptrIMG2: db     `\n  ptrIMG2 = %p \n`, 10, 0
+msg_ptrIMG1: db     `\n  ptrIMG1 = %p \n`, 10, 0
 
 ;p dd 2.0
 v1 dd 7.0
@@ -33,11 +34,11 @@ push EBP
 mov EBP, ESP
 
 
-mov EDX, [EBP+8] ;ptrIMG2
+mov EDX, [EBP+8] ;ptrIMGR
 mov EBX, [EBP+12];CANTIDAD
 mov ESI, [EBP+16];p
-;mov ECX, [EBP+24];
-;mov ECX, [EBP+28];ptrIMG1
+mov ECX, [EBP+24];ptrIMG2
+mov EDI, [EBP+28];ptrIMG1
 
 
 push dword [EBX]
@@ -57,10 +58,15 @@ push dword msg_ptrIMGR
 call _printf
 add esp,8
 
-;push dword [EDX]
-;push dword msg_ptrIMG2
-;call _printf
-;add esp,8
+push dword [ECX]
+push dword msg_ptrIMG2
+call _printf
+add esp,8
+
+push dword [EDI]
+push dword msg_ptrIMG1
+call _printf
+add esp,8
 
 ;fld dword [EBX]
 ;push v1
@@ -68,6 +74,6 @@ add esp,8
 ;push ptrProportion
 ;call _calculate_proportion
 
-add ESP, 24
+add ESP, 32
 
 ret
