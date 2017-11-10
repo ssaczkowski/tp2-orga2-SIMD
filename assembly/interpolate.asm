@@ -74,11 +74,17 @@ mov EDI, v2
 mov ESI, ptrProportion
 
 
+mov EBX, [EBP+12];CANTIDAD
+mov eax,[ebx]
 
-jmp calculate_proportion
 
+comparar:
 
-calculate_proportion:
+cmp eax,0
+sub eax,1
+je finalizar
+
+;calculate_proportion:
 
 ; p * v1 
 fld dword [EDX]
@@ -105,12 +111,27 @@ mov EDX,ESI
 
 fst   qword   [EDX]
 
-push fmt
-call _printf
-add ESP, 8
 
+
+;push fmt
+;call _printf
+;add ESP, 4
+
+push dword eax
+push dword msg_quantity
+call _printf
+add esp,4
+pop eax
+
+jmp comparar
 
 finalizar:
+
+push dword eax
+push dword msg_quantity
+call _printf
+add esp,4
+pop eax
 
 add ESP, 32
 mov     ESP, EBP
