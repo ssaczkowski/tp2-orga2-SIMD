@@ -54,7 +54,9 @@ int main()
 		free(pointerFileRead);
 	//WRITE RGB
 		archivo = (unsigned char*) malloc(imageSize*3); //cambiar el buffer2 por el buffer del resultado
-	interpolate(buffer,buffer2, 1.0, 1,archivo);
+    	printf("PImg1: %p,  PImg2: %p, P: %f, Cant: %d, Archivo: %p \n",buffer,buffer2,1.0,1,archivo);
+		interpolate(buffer,buffer2, 1.0, 1,archivo);
+	
 	  pFile = fopen ("../img/resultado.rgb", "wb");
 	  	if(!feof(file)){		
 	    fwrite (archivo , (imageSize*3), (imageSize), pFile);
