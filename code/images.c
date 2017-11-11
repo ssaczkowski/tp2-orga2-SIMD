@@ -5,7 +5,7 @@ void read_rgb (unsigned char *file, unsigned char *buffer, int rows, int columns
 void printBuffer(unsigned char *buffer, int size);
 void write_rgb (unsigned char *archivo, unsigned char *buffer, int rows, int columns);
 void printFile(unsigned char *file, int size);
-
+extern void interpolate(unsigned char *img1,unsigned char *img2, float p, int count,unsigned char *imgResult);
 //void split_rgb (FILE *file, unsigned char buffer[][3], int rows, int columns);
 //void printMatrixBuffer(unsigned char buffer[][3], int size);
 
@@ -53,10 +53,10 @@ int main()
 	}
 		free(pointerFileRead);
 	//WRITE RGB
+		archivo = (unsigned char*) malloc(imageSize*3); //cambiar el buffer2 por el buffer del resultado
+	interpolate(buffer,buffer2, 1.0, 1,archivo);
 	  pFile = fopen ("../img/resultado.rgb", "wb");
 	  	if(!feof(file)){		
-	  	archivo = (unsigned char*) malloc(imageSize*3); //cambiar el buffer2 por el buffer del resultado
-		write_rgb(archivo,buffer2,high,width);
 	    fwrite (archivo , (imageSize*3), (imageSize), pFile);
 	    fclose (pFile);
 }
@@ -64,21 +64,7 @@ int main()
 	return 0;
 }
 
-void write_rgb ( char *file, unsigned char *buffer, int rows, int columns){
-	
-	 	int indexBuffer= 0; 
-    	
-		for ( int i = 0 ; i < columns ; i++ ) {
-     		for ( int j = 0 ; j < rows ; j++ ) {
-     		
-     				
-         			file[indexBuffer]= buffer[indexBuffer];
-         			indexBuffer++;
-         		
-			}	
-		}
-		
-}
+
 
 void read_rgb (unsigned char *file, unsigned char *buffer, int rows, int columns){
 	
@@ -110,7 +96,7 @@ void printBuffer(unsigned char *buffer, int size){
 }
 
 
-void printFile(  char *file, int size){
+void printFile( unsigned char *file, int size){
 	
 		printf("\nFile of %d elements:\n\n\n", size);
 		

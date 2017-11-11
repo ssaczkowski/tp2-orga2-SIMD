@@ -38,8 +38,9 @@ mov ESI, [EBP+16];p
 mov ECX, [EBP+24];ptrIMG2
 mov EDI, [EBP+28];ptrIMG1
 
+
 ; for debug
-push dword [EBX]
+push dword EBX
 push dword msg_quantity
 call _printf
 add esp,8
@@ -69,10 +70,7 @@ add esp,8
 ;end for debug
 
 
-mov EDX, ESI ;p 
-mov EBX, v1 
-mov EDI, v2 
-mov ESI, ptrProportion
+
 
 
 mov EBX, [EBP+12];CANTIDAD
@@ -80,7 +78,7 @@ mov EBX, [EBP+12];CANTIDAD
 mov eax,[ebx]
 comparar:
 
-cmp eax,[ebx]
+cmp eax,0
 sub eax,1
 je finalizar
 
@@ -90,41 +88,39 @@ je finalizar
 ;calculate_proportion:
 
 ; p * v1 
-fld dword [EDX+eax]
-fld dword [EBX]
+fld dword [ESI]
+fld dword [edi+eax]
 fmul ; ST0 = 4.0
 
 
 ;(1-p)*v2
 fld dword [one]
-fld dword [EDX+eax]
+fld dword [ESI]
 fsub 
 fst   qword   [r1]  
-fld dword [EDI+eax]
+fld dword [ecx+eax]
 fmul ; = -2.0
 
 fadd ; 2.0
 
+;fst qword [r2]
 
+;mov edx,[r2]
 
 fst qword [r2]
 push dword [r2+4]
 push dword [r2]
-mov EDX,ESI
-
-fst   qword   [EDX+eax]
-
-
-
-;push fmt
-;call _printf
-;add ESP, 4
-
-push dword eax
-push dword msg_quantity
+push fmt
 call _printf
-add esp,4
-pop eax
+
+;push dword [r2+4]
+;push dword [r2]
+;mov EDX,ESI
+
+;fst   qword   [EDX+eax]
+
+
+
 
 jmp comparar
 
@@ -137,32 +133,14 @@ add esp,4
 pop eax
 
 ; for debug
-push dword [EBX]
-push dword msg_quantity
-call _printf
-add esp,8
 
-sub esp,8   
-fld dword [ESI] 
-fstp qword [esp]  
-push msg_p
-call _printf
-add esp, 12
-
-push dword [EDX]
+;mov edx,[edx]
+push dword [r2]
 push dword msg_ptrIMGR
 call _printf
 add esp,8
 
-push dword [ECX]
-push dword msg_ptrIMG2
-call _printf
-add esp,8
 
-push dword [EDI]
-push dword msg_ptrIMG1
-call _printf
-add esp,8
 ;end for debug
 
 add ESP, 32

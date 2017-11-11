@@ -1,7 +1,7 @@
 section .data
 msg_welcome:    db     `\nMAIN\n`, 10, 0
 
-CANTIDAD dd 4
+CANTIDAD dd 1
 p dd 2.0
 ptrIMGR dd 0
 ptrIMG2 dd 0
@@ -22,8 +22,10 @@ add esp,4
 push EBP
 mov EBP, ESP
 
-push ptrIMG1
-push ptrIMG2
+mov eax,4
+mov ebx,3
+push dword [eax]
+push dword [ebx]
 push p
 push CANTIDAD
 push ptrIMGR
