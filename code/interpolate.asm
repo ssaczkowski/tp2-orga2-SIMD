@@ -3,8 +3,8 @@ section .data
 msg_welcome:    db     `\nInterpolating... Parameters:\n`, 10, 0
 msg_quantity:    db     `\n  Quantity = %p \n`, 10, 0
 msg_p:    db     `\n  p = %f \n`, 10, 0
-msg_v1:    db     `\n  v1 = %f \n`, 10, 0
-msg_v2:    db     `\n  v2 = %f \n`, 10, 0
+msg_v1:    db     `\n  v1 = %p \n`, 10, 0
+msg_v2:    db     `\n  v2 = %d \n`, 10, 0
 msg_ptrIMGR: db     `\n  ptrIMGR = %p \n`, 10, 0
 msg_ptrIMG2: db     `\n  ptrIMG2 = %p \n`, 10, 0
 msg_ptrIMG1: db     `\n  ptrIMG1 = %p \n`, 10, 0
@@ -20,6 +20,7 @@ p dd 0.0
 section .text
 
 extern _printf
+extern _getValue
 
 global _interpolate
 
@@ -39,7 +40,7 @@ mov ECX, [EBP+12];ptrIMG2
 fld     qword [ebp + 16]
 fstp    qword [p]
 mov EDX, [EBP+24];ptrIMGR
-mov EBX, [EBP+28];cantida
+mov EBX, [EBP+28];cantidad
 
 
 ; for debug
@@ -58,12 +59,15 @@ mov ECX, [EBP+12]
 push dword ECX
 push dword msg_ptrIMG2
 call _printf
-add esp,8
+add esp,12
 
-push dword EDI
+mov EDI,[EBP+8]
+push dword [EDI]
+push  EDI
 push dword msg_ptrIMG1
 call _printf
 add esp,8
+
 
 
 fld dword [p]
@@ -74,22 +78,36 @@ push msg_p
 call _printf
 add ESP, 12
 
+
 ;end for debug
 
 
-mov EBX, [EBP+12];CANTIDAD
-mov eax,[ebx]
+push  EDI ;resitro con puntero
+call _getValue
+mov edi,eax ;el valor devuelto por la funcion lo tiene eax
+
+push dword [edi]
+push dword msg_v1
+call _printf
+add esp,4
+
+
+
+jmp finalizar
 
 calculate_proportion:
 
-cmp eax,0
-sub eax,1
+cmp ESI,0
+sub ESI,1
 je finalizar
 
+push dword msg_welcome
+call _printf
+add esp,4
 
 ; p * v1 
 fld dword [p]
-fld dword [edi+eax]
+fld dword [edi+ESI]
 fmul
 
 
@@ -98,7 +116,7 @@ fld dword [one]
 fld dword [p]
 fsub 
 fst   qword   [r1]  
-fld dword [ecx+eax]
+fld dword [ecx+ESI]
 fmul 
 
 fadd 
