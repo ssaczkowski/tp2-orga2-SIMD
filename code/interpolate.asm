@@ -1,6 +1,6 @@
 section .data
 msg_welcome:    db     `\nInterpolating... Parameters:\n`, 10, 0
-msg_quantity:    db     `\n  Quantity = %d \n`, 10, 0
+msg_quantity:    db     `\n  Quantity = %p \n`, 10, 0
 msg_p:    db     `\n  p = %f \n`, 10, 0
 msg_v1:    db     `\n  v1 = %f \n`, 10, 0
 msg_v2:    db     `\n  v2 = %f \n`, 10, 0
@@ -32,38 +32,34 @@ push EBP
 mov EBP, ESP
 
 
-mov EDX, [EBP+8] ;ptrIMGR
-mov EBX, [EBP+12];CANTIDAD
+
+
+mov EDI, [EBP+8] ;ptrIMG1
+mov ECX, [EBP+12];ptrIMG2
 mov ESI, [EBP+16];p
-mov ECX, [EBP+24];ptrIMG2
-mov EDI, [EBP+28];ptrIMG1
+mov EDX, [EBP+24];ptrIMGR
+mov EBX, [EBP+28];cantida
 
 
 ; for debug
-push dword EBX
+push dword ebx
 push dword msg_quantity
 call _printf
-add esp,8
+add esp,4
 
-
-sub esp,8   
-fld dword [ESI] 
-fstp qword [esp]  
-push msg_p
-call _printf
-add esp, 12
-
-push dword [EDX]
+mov EDX, [EBP+24];ptrIMGR
+push dword EDX
 push dword msg_ptrIMGR
 call _printf
 add esp,8
 
-push dword [ECX]
+mov ECX, [EBP+12];ptrIMG2
+push dword ECX
 push dword msg_ptrIMG2
 call _printf
 add esp,8
 
-push dword [EDI]
+push dword EDI
 push dword msg_ptrIMG1
 call _printf
 add esp,8
