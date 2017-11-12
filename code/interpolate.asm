@@ -1,4 +1,5 @@
 section .data
+
 msg_welcome:    db     `\nInterpolating... Parameters:\n`, 10, 0
 msg_quantity:    db     `\n  Quantity = %p \n`, 10, 0
 msg_p:    db     `\n  p = %f \n`, 10, 0
@@ -14,11 +15,10 @@ fmt db "r: %f", 10, 0
 v1 dd 3.0
 v2 dd 1.0
 p dd 0.0
-p2 dd 9.9
 
-ptrProportion dd 0
 
 section .text
+
 extern _printf
 
 global _interpolate
@@ -33,10 +33,9 @@ add esp,4
 push EBP
 mov EBP, ESP
 
-
+;Get parameters
 mov EDI, [EBP+8] ;ptrIMG1
 mov ECX, [EBP+12];ptrIMG2
-;mov ESI, [EBP+16];p
 fld     qword [ebp + 16]
 fstp    qword [p]
 mov EDX, [EBP+24];ptrIMGR
@@ -49,13 +48,13 @@ push dword msg_quantity
 call _printf
 add esp,4
 
-mov EDX, [EBP+24];ptrIMGR
+mov EDX, [EBP+24]
 push dword EDX
 push dword msg_ptrIMGR
 call _printf
 add esp,8
 
-mov ECX, [EBP+12];ptrIMG2
+mov ECX, [EBP+12]
 push dword ECX
 push dword msg_ptrIMG2
 call _printf
@@ -67,8 +66,6 @@ call _printf
 add esp,8
 
 
-
-;fld dword [EAX]
 fld dword [p]
 fst qword [p]
 push dword [p+4]
@@ -80,42 +77,31 @@ add ESP, 12
 ;end for debug
 
 
-
-
-
 mov EBX, [EBP+12];CANTIDAD
-;mov ebx,[ebx]
 mov eax,[ebx]
-comparar:
+
+calculate_proportion:
 
 cmp eax,0
 sub eax,1
 je finalizar
 
 
-;*************REVISAR LOS [XXX+EAX]******
-
-;calculate_proportion:
-
 ; p * v1 
-fld dword [ESI]
+fld dword [p]
 fld dword [edi+eax]
-fmul ; ST0 = 4.0
+fmul
 
 
 ;(1-p)*v2
 fld dword [one]
-fld dword [ESI]
+fld dword [p]
 fsub 
 fst   qword   [r1]  
 fld dword [ecx+eax]
-fmul ; = -2.0
+fmul 
 
-fadd ; 2.0
-
-;fst qword [r2]
-
-;mov edx,[r2]
+fadd 
 
 fst qword [r2]
 push dword [r2+4]
@@ -123,38 +109,12 @@ push dword [r2]
 push fmt
 call _printf
 
-;push dword [r2+4]
-;push dword [r2]
-;mov EDX,ESI
-
-;fst   qword   [EDX+eax]
-
-
-
-
-jmp comparar
+jmp calculate_proportion
 
 finalizar:
 
-push dword eax
-push dword msg_quantity
-call _printf
-add esp,4
-pop eax
-
-; for debug
-
-;mov edx,[edx]
-push dword [r2]
-push dword msg_ptrIMGR
-call _printf
-add esp,8
-
-
-;end for debug
-
 add ESP, 32
-mov     ESP, EBP
-pop     EBP
+;mov     ESP, EBP
+;pop     EBP
 
 ret
