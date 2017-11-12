@@ -13,6 +13,8 @@ r2 dq 0.0
 fmt db "r: %f", 10, 0
 v1 dd 3.0
 v2 dd 1.0
+p dd 0.0
+p2 dd 9.9
 
 ptrProportion dd 0
 
@@ -32,11 +34,11 @@ push EBP
 mov EBP, ESP
 
 
-
-
 mov EDI, [EBP+8] ;ptrIMG1
 mov ECX, [EBP+12];ptrIMG2
-mov ESI, [EBP+16];p
+;mov ESI, [EBP+16];p
+fld     qword [ebp + 16]
+fstp    qword [p]
 mov EDX, [EBP+24];ptrIMGR
 mov EBX, [EBP+28];cantida
 
@@ -63,6 +65,18 @@ push dword EDI
 push dword msg_ptrIMG1
 call _printf
 add esp,8
+
+
+
+;fld dword [EAX]
+fld dword [p]
+fst qword [p]
+push dword [p+4]
+push dword [p]
+push fmt
+call _printf
+add ESP, 12
+
 ;end for debug
 
 

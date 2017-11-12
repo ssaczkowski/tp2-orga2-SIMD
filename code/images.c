@@ -6,6 +6,9 @@ void printBuffer(unsigned char *buffer, int size);
 void write_rgb (unsigned char *archivo, unsigned char *buffer, int rows, int columns);
 void printFile(unsigned char *file, int size);
 extern void interpolate(unsigned char *img1,unsigned char *img2, float p, int count,unsigned char *imgResult);
+
+//void _area_circulo(unsigned char *file, int size);
+
 //void split_rgb (FILE *file, unsigned char buffer[][3], int rows, int columns);
 //void printMatrixBuffer(unsigned char buffer[][3], int size);
 
@@ -54,7 +57,9 @@ int main()
 		free(pointerFileRead);
 	//WRITE RGB
 		archivo = (unsigned char*) malloc(imageSize*3); //cambiar el buffer2 por el buffer del resultado
-    	printf("PImg1: %p,  PImg2: %p, P: %f, Cant: %d, Archivo: %p \n",buffer,buffer2,1.0,1,archivo);
+		float f=1.0;
+    	printf("PImg1: %p,  PImg2: %p, P: %f, Cant: %d, Archivo: %p \n",buffer,buffer2,f,1,archivo);
+    
 		interpolate(buffer,buffer2, 1.0, 1,archivo);
 	
 	  pFile = fopen ("../img/resultado.rgb", "wb");
