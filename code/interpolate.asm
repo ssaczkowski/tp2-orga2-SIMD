@@ -70,7 +70,7 @@ fld dword [p]
 fst qword [p]
 push dword [p+4]
 push dword [p]
-push fmt
+push msg_p
 call _printf
 add ESP, 12
 
