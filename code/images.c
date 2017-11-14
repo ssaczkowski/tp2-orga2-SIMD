@@ -6,7 +6,7 @@ void printBuffer(unsigned char *buffer, int size);
 void write_rgb (unsigned char *archivo, unsigned char *buffer, int rows, int columns);
 void printFile(unsigned char *file, int size);
 extern void interpolate(unsigned char *img1,unsigned char *img2, float p, int count,unsigned char *imgResult);
-int getValue(unsigned char *img);
+int getValue(unsigned char *img,int position);
 
 //void _area_circulo(unsigned char *file, int size);
 
@@ -62,6 +62,7 @@ int main()
     	printf("PImg1: %p,  PImg2: %p, P: %f, Cant: %d, Archivo: %p \n",buffer,buffer2,f,1,archivo);
     
     	printf("primer valor PImg1: %d y su puntero %p , tamaño %d\n",buffer[0],&buffer[0],sizeof(buffer[0]));
+    		printf("primer valor PImg2: %d y su puntero %p , tamaño %d\n",buffer2[0],&buffer2[0],sizeof(buffer2[0]));
     	
 		interpolate(buffer,buffer2, 1.0, 1,archivo);
 	
@@ -129,11 +130,11 @@ void write_rgb (unsigned char *file, unsigned char *buffer, int rows, int column
 		}
 }
 
-int getValue(unsigned char *img)
+int getValue(unsigned char *img,int position)
 {
 
-    printf("PImg1: %p, valor: %d", img, img[0]) ;
-    return img[0];
+    printf("\n Puntero: %p, valor: %d \n", img, img[position]) ;
+    return img[position];
 }
 
 
